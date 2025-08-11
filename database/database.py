@@ -1,4 +1,4 @@
-#databases\databases.py
+#database\database.py
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 import os
@@ -17,3 +17,11 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 #Clase base de SQLAlchemy para crear los modelos de las tablas
 Base = declarative_base()
+
+# Dependencia para obtener la sesión
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
